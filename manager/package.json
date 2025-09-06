@@ -1,0 +1,29 @@
+{
+  "name": "@vision-logistics/manager",
+  "version": "1.0.0",
+  "description": "Vision Logistics Manager Service",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "redis": "^4.6.8",
+    "fastify": "^4.24.3",
+    "@fastify/cors": "^8.4.0",
+    "zod": "^3.22.4",
+    "pino": "^8.16.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "tsx": "^4.1.4",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
+  }
+}

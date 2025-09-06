@@ -1,0 +1,51 @@
+{
+  "name": "vision-logistics",
+  "version": "1.0.0",
+  "description": "Vision-Enabled Logistics Tracking System",
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "collector",
+    "manager", 
+    "ui"
+  ],
+  "scripts": {
+    "start": "node startup.js",
+    "start:legacy": "node scripts/start.js",
+    "start:fallback": "node scripts/start.js --fallback",
+    "start:no-docker": "node scripts/start.js --no-docker",
+    "fix-and-start": "node scripts/fix-and-start.js",
+    "stop": "node scripts/start.js stop",
+    "system": "./scripts/system-manager.sh",
+    "system:start": "./scripts/system-manager.sh start",
+    "system:stop": "./scripts/system-manager.sh stop",
+    "system:status": "./scripts/system-manager.sh status",
+    "system:health": "./scripts/system-manager.sh health",
+    "system:logs": "./scripts/system-manager.sh logs",
+    "validate": "node scripts/validate-system.js",
+    "dev": "concurrently \"npm run dev:collector\" \"npm run dev:manager\" \"npm run dev:ui\"",
+    "dev:collector": "cd collector && npm run dev",
+    "dev:manager": "cd manager && npm run dev", 
+    "dev:ui": "cd ui && npm run dev",
+    "build": "npm run build:collector && npm run build:manager && npm run build:ui",
+    "build:collector": "cd collector && npm run build",
+    "build:manager": "cd manager && npm run build",
+    "build:ui": "cd ui && npm run build",
+    "test": "npm run test:collector && npm run test:manager",
+    "test:collector": "cd collector && npm test",
+    "test:manager": "cd manager && npm test",
+    "docker:up": "cd docker && docker-compose up -d || cd docker && docker compose up -d",
+    "docker:down": "cd docker && docker-compose down || cd docker && docker compose down",
+    "generate-test-data": "node scripts/generate-test-data.js",
+    "generate-camera-data": "node scripts/camera-data-generator.js",
+    "generate-interactive": "node scripts/interactive-generator.js",
+    "generate-visualization": "node scripts/visualization-scenarios.js",
+    "demo": "node scripts/interactive-generator.js",
+    "demo-quick": "node scripts/camera-data-generator.js quick_demo",
+    "demo-warehouse": "node scripts/camera-data-generator.js warehouse_busy",
+    "demo-visualization": "node scripts/visualization-scenarios.js heatwave"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

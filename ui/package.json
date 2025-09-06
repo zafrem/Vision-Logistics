@@ -1,0 +1,35 @@
+{
+  "name": "@vision-logistics/ui",
+  "version": "1.0.0",
+  "description": "Vision Logistics UI Dashboard",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "@rolldown/pluginutils": "^1.0.0-beta.27",
+    "axios": "^1.5.1",
+    "clsx": "^2.0.0",
+    "date-fns": "^2.30.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.17.0",
+    "recharts": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.28",
+    "@types/react-dom": "^18.2.13",
+    "@vitejs/plugin-react": "^4.1.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.11",
+    "vitest": "^0.34.6"
+  }
+}
