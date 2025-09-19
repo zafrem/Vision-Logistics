@@ -6,7 +6,7 @@
   "private": true,
   "workspaces": [
     "collector",
-    "manager", 
+    "manager",
     "ui"
   ],
   "scripts": {
@@ -25,7 +25,7 @@
     "validate": "node scripts/validate-system.js",
     "dev": "concurrently \"npm run dev:collector\" \"npm run dev:manager\" \"npm run dev:ui\"",
     "dev:collector": "cd collector && npm run dev",
-    "dev:manager": "cd manager && npm run dev", 
+    "dev:manager": "cd manager && npm run dev",
     "dev:ui": "cd ui && npm run dev",
     "build": "npm run build:collector && npm run build:manager && npm run build:ui",
     "build:collector": "cd collector && npm run build",
@@ -47,5 +47,8 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
+  },
+  "dependencies": {
+    "react-refresh": "^0.17.0"
   }
 }

@@ -12,13 +12,14 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "kafkajs": "^2.2.4",
-    "uuid": "^9.0.1",
-    "zod": "^3.22.4",
-    "fastify": "^4.24.3",
     "@fastify/cors": "^8.4.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.24.3",
+    "kafkajs": "^2.2.4",
     "pino": "^8.16.1",
-    "dotenv": "^16.3.1"
+    "redis": "^4.0.0",
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20.8.10",
