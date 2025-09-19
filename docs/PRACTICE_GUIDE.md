@@ -434,7 +434,7 @@ Create and document at least one substantial project:
 
 ### **Documentation**
 - [Demo Guide](./DEMO_GUIDE.md) - Presentation and demonstration
-- [README](./README.md) - System overview and quick start
+- [README](../README.md) - System overview and quick start
 - [Troubleshooting](./TROUBLESHOOTING.md) - Common issues and solutions
 
 ### **Community**

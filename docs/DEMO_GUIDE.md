@@ -248,10 +248,9 @@ cd ui && npm run dev
 
 ## 📚 **Additional Resources**
 
-- **[Setup Guide](./README.md)**: Complete installation instructions
+- **[Setup Guide](../README.md)**: Complete installation instructions
 - **[Practice Tutorial](./PRACTICE_GUIDE.md)**: Hands-on learning exercises
 - **[Troubleshooting](./TROUBLESHOOTING.md)**: Common issues and solutions
-- **[API Documentation](./API_REFERENCE.md)**: Technical integration details
 
 ## 🎯 **Next Steps After Demo**
 
