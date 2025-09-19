@@ -309,3 +309,380 @@ cd ui && npm run dev          # Restart UI
 ```
 
 Remember: When in doubt, try `npm run fix-and-start` - it handles most common issues automatically! 🚀
+
+---
+
+## 🎬 **Animation and Demo Troubleshooting**
+
+### **Animation Not Visible**
+
+**Symptoms:**
+- Heatmap shows static data only
+- No movement patterns visible
+- Objects stay in same positions
+
+**Diagnosis:**
+```bash
+# Check if mock API is serving dynamic data
+curl http://localhost:3002/heatmap | jq '.timestamp'
+# Should return current timestamp that changes
+
+# Check animation patterns
+curl http://localhost:3002/objects/active | jq '.objects[].current_cell'
+# Should show different positions when called multiple times
+```
+
+**Solutions:**
+```bash
+# Restart mock API for fresh animation
+pkill -f "mock-api"
+node mock-api.js
+
+# Verify animation timing (15-second cycles)
+# Wait 15-30 seconds between requests to see changes
+
+# Force browser cache refresh
+# Press Ctrl+F5 (Windows) or Cmd+Shift+R (Mac)
+```
+
+### **Demo Data vs Test Data Confusion**
+
+**Important:** The system uses two different data sources:
+
+1. **Mock API (for demos)**: `mock-api.js` - provides animated demonstration data
+2. **Real pipeline**: collector → manager → UI (for actual use)
+
+**If using `npm run generate-test-data` doesn't show results:**
+- This is expected! Test data goes to the real pipeline
+- The demo UI uses mock API data for animations
+- To see test data, you need the manager service working properly
+
+**Solutions:**
+```bash
+# For animated demos (recommended):
+node mock-api.js
+# Browse to http://localhost:3000
+
+# For real data pipeline:
+# Fix Redis compatibility first (see Redis section above)
+cd manager && npm run dev
+npm run generate-test-data
+```
+
+## 🔧 **Advanced Troubleshooting**
+
+### **Redis Client Compatibility Issues**
+
+**Error Message:**
+```
+TypeError: Cannot destructure property 'resolve' of 'undefined' or null
+```
+
+**Root Cause:** Redis client version 4.6.8+ incompatible with Node.js v22
+
+**Solution:**
+```bash
+cd manager
+npm install redis@4.0.0
+npm run dev
+```
+
+### **Memory and Performance Issues**
+
+**High Memory Usage:**
+```bash
+# Monitor Node.js processes
+ps aux | grep node
+top -p $(pgrep node)
+
+# If memory is high, restart services
+npm run system:stop
+npm start
+```
+
+**Slow API Responses:**
+```bash
+# Test response times
+time curl http://localhost:3002/heatmap
+time curl http://localhost:3002/stats/cells
+
+# If slow (>2 seconds), check Redis
+redis-cli ping
+redis-cli info memory
+```
+
+### **TypeScript and Build Errors**
+
+**Missing Type Definitions:**
+```bash
+cd ui
+npm install @types/node @types/react @types/react-dom
+npm run type-check
+```
+
+**Vite Build Issues:**
+```bash
+cd ui
+rm -rf node_modules/.vite dist
+npm install
+npm run build
+```
+
+### **Network and Security Issues**
+
+**Firewall Blocking Ports:**
+```bash
+# macOS
+sudo pfctl -d  # Disable firewall temporarily
+
+# Linux (Ubuntu)
+sudo ufw allow 3000:3002/tcp
+
+# Windows
+# Add firewall rule in Windows Defender
+```
+
+**CORS Issues in Browser:**
+```bash
+# Check browser console for CORS errors
+# Start browser with disabled security (development only):
+
+# Chrome
+open -a "Google Chrome" --args --disable-web-security --user-data-dir=/tmp/chrome_dev
+
+# Firefox
+firefox --new-instance --profile /tmp/firefox_dev
+```
+
+## 📊 **Monitoring and Debugging**
+
+### **Real-time Monitoring**
+
+**Monitor All Services:**
+```bash
+# Terminal 1: Watch API responses
+watch -n 2 'curl -s http://localhost:3002/health | jq .'
+
+# Terminal 2: Monitor heatmap changes
+watch -n 5 'curl -s http://localhost:3002/heatmap | jq .timestamp'
+
+# Terminal 3: Watch active objects
+watch -n 3 'curl -s http://localhost:3002/objects/active | jq ".objects[].current_cell"'
+```
+
+**Log Analysis:**
+```bash
+# Search for specific errors
+grep -r "ERROR" .logs/
+grep -r "Redis" .logs/
+grep -r "connection" .logs/
+
+# Monitor logs in real-time
+tail -f .logs/*.log | grep -E "(ERROR|WARN|animation|heatmap)"
+```
+
+### **Browser Developer Tools**
+
+**Essential Checks:**
+1. **Console Tab**: Look for JavaScript errors
+2. **Network Tab**: Check for failed API requests
+3. **Performance Tab**: Monitor memory usage and rendering
+4. **Application Tab**: Check localStorage/sessionStorage
+
+**Common Browser Errors:**
+- `ERR_CONNECTION_REFUSED`: Service not running
+- `404 Not Found`: Missing assets or endpoints
+- `CORS error`: Cross-origin policy issues
+- `Memory leak warnings`: React component issues
+
+## 🔬 **Deep Debugging**
+
+### **Database State Inspection**
+
+**Redis Debugging:**
+```bash
+# Connect to Redis
+redis-cli
+
+# Inspect keys and data
+KEYS *
+HGETALL object:obj-123
+SCAN 0 MATCH cell:*
+INFO memory
+MONITOR  # Watch all commands (exit with Ctrl+C)
+```
+
+**Data Flow Validation:**
+```bash
+# 1. Generate test frame
+curl -X POST http://localhost:3001/generate-test-frame \
+  -H "Content-Type: application/json" \
+  -d '{"camera_id": "debug", "object_count": 1}'
+
+# 2. Check if it reaches Redis
+redis-cli KEYS frame:*
+
+# 3. Check if manager processes it
+curl http://localhost:3002/status
+
+# 4. Verify UI receives it
+curl http://localhost:3002/heatmap | jq .cells
+```
+
+### **Component-Level Debugging**
+
+**React DevTools:**
+1. Install React Developer Tools browser extension
+2. Open to Components tab
+3. Look for state updates and re-renders
+4. Monitor hooks like `useHeatmap`, `useActiveObjects`
+
+**Manual Component Testing:**
+```javascript
+// In browser console, test API directly
+fetch('http://localhost:3002/heatmap')
+  .then(r => r.json())
+  .then(data => console.log('Heatmap data:', data));
+
+fetch('http://localhost:3002/objects/active')
+  .then(r => r.json())
+  .then(data => console.log('Active objects:', data));
+```
+
+## 🆘 **Emergency Recovery Procedures**
+
+### **Complete System Recovery**
+
+**When Everything is Broken:**
+```bash
+#!/bin/bash
+echo "🚨 EMERGENCY RECOVERY STARTING..."
+
+# 1. Kill all processes
+sudo pkill -f node
+sudo pkill -f redis
+sudo pkill -f vite
+
+# 2. Clean all caches
+rm -rf node_modules collector/node_modules manager/node_modules ui/node_modules
+rm -rf .logs .pids
+npm cache clean --force
+
+# 3. Reset Redis
+brew services stop redis
+rm -rf /usr/local/var/db/redis/
+brew services start redis
+
+# 4. Fresh install
+npm install
+
+# 5. Create missing assets
+mkdir -p ui/public
+echo '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#646cff"/></svg>' > ui/public/vite.svg
+
+# 6. Start with fallback
+npm run fix-and-start
+
+echo "✅ EMERGENCY RECOVERY COMPLETE"
+```
+
+### **Service-Specific Recovery**
+
+**Manager Service Issues:**
+```bash
+# Check manager dependencies
+cd manager
+npm install redis@4.0.0
+npm audit fix
+
+# Test manager independently
+REDIS_URL=redis://localhost:6380 npm run dev
+
+# If still failing, use mock API
+pkill -f manager
+node mock-api.js
+```
+
+**UI Service Issues:**
+```bash
+cd ui
+rm -rf node_modules dist .vite
+npm install
+npm run build
+npm run preview  # Test built version
+```
+
+## 📋 **Maintenance and Prevention**
+
+### **Regular Health Checks**
+
+**Daily Checks:**
+```bash
+# Morning routine
+npm run system:health
+curl http://localhost:3002/heatmap > /dev/null && echo "✅ API working"
+ls -la .logs/ | tail -5  # Check log sizes
+
+# Clean up old logs (weekly)
+find .logs -name "*.log" -mtime +7 -delete
+```
+
+**Performance Monitoring:**
+```bash
+# Check memory usage trends
+ps aux | grep node | awk '{print $4}' | awk '{sum+=$1} END {print "Total memory: " sum "%"}'
+
+# Monitor disk space
+df -h .
+du -sh node_modules
+```
+
+### **Backup and Restore**
+
+**Configuration Backup:**
+```bash
+# Backup important configs
+tar -czf config-backup-$(date +%Y%m%d).tar.gz \
+  package.json \
+  collector/package.json \
+  manager/package.json \
+  ui/package.json \
+  *.md \
+  mock-api.js
+
+# Restore from backup
+tar -xzf config-backup-20240115.tar.gz
+npm install
+```
+
+## 📚 **Reference Information**
+
+### **Port and Service Map**
+
+| Port | Service | Health Check | Purpose |
+|------|---------|--------------|---------|
+| 3000 | UI (Vite) | `curl http://localhost:3000` | React frontend |
+| 3001 | Collector | `curl http://localhost:3001/health` | Data collection |
+| 3002 | Manager/Mock API | `curl http://localhost:3002/health` | Data processing |
+| 6379 | Redis | `redis-cli ping` | Data storage |
+
+### **Environment Variables**
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `REDIS_URL` | `redis://localhost:6379` | Redis connection |
+| `COLLECTOR_PORT` | `3001` | Collector service port |
+| `PORT` | `3000` | UI service port |
+| `NODE_ENV` | `development` | Environment mode |
+
+### **Critical File Locations**
+
+- **Logs**: `.logs/*.log`
+- **Process IDs**: `.pids/*.pid`
+- **Mock API**: `mock-api.js`
+- **UI Assets**: `ui/public/`
+- **Configuration**: `*/package.json`
+
+---
+
+**🛠️ Comprehensive troubleshooting complete! This guide covers everything from quick fixes to deep debugging.**

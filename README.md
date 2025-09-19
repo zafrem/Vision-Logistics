@@ -46,6 +46,22 @@ npm run demo
 - ⚙️ **Adjustable settings** (speed, duration, intensity)
 - 📊 **Real-time monitoring** and system health checks
 
+### **🎬 Animated Demo Screen**
+
+```bash
+npm start
+# Wait for services to start, then open: http://localhost:3000
+```
+
+**Features Live Animated Movement:**
+- 🚛 **Horizontal Forklift**: Moves left-to-right across warehouse floor
+- 👷 **Diagonal Worker**: Travels diagonally through work zones
+- 📦 **Circular Pallet**: Orbital movement pattern around storage area
+- 🛒 **Vertical Cart**: Oscillates up-and-down in transport corridor
+- 🔥 **15-second animation cycles** with smooth, realistic movement
+- 📊 **Synchronized data** - active objects match heatmap positions
+- 🎯 **Auto-refresh every 30 seconds** for continuous animation
+
 ## 🏗️ **System Architecture**
 
 ```
