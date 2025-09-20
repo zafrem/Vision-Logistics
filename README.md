@@ -1,4 +1,4 @@
-# 🎯 Vision Logistics Tracking System
+# Vision Logistics Tracking System
 
 > **Real-time warehouse logistics tracking with live animated heatmaps**
 
@@ -8,7 +8,7 @@ A demo-ready system that visualizes object movements across warehouse grid cells
 [![Docker Support](https://img.shields.io/badge/docker-supported-blue)](#quick-start)
 [![Cross Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey)](#quick-start)
 
-## 🚀 **Quick Start**
+## **Quick Start**
 
 ```bash
 git clone <repository-url>
@@ -16,20 +16,20 @@ cd vision-logistics
 npm start
 ```
 
-**🌐 Open http://localhost:3000** to see:
+** Open http://localhost:3000** to see:
 - **Live animated heatmap** with 4 moving objects
 - **Real-time statistics** and object tracking
 - **Event log** showing live warehouse activity
 
-### **🎬 What You'll See**
+### ** What You'll See**
 
-- 🚛 **Forklift**: Horizontal movement across warehouse floor
-- 👷 **Worker**: Diagonal movement through work zones
-- 📦 **Pallet**: Circular movement around storage area
-- 🛒 **Cart**: Vertical movement in transport corridors
-- 🔄 **15-second animation cycles** with auto-refresh
+-  **Forklift**: Horizontal movement across warehouse floor
+-  **Worker**: Diagonal movement through work zones
+-  **Pallet**: Circular movement around storage area
+-  **Cart**: Vertical movement in transport corridors
+-  **15-second animation cycles** with auto-refresh
 
-## 🏗️ **System Architecture**
+## **System Architecture**
 
 ```
 🎥 Cameras → 📡 Collectors → 🗄️ Redis → 🧮 Manager → 📊 Analytics
@@ -43,7 +43,7 @@ npm start
 | **Manager** | Calculate dwell times | 3002 |
 | **UI** | Live analytics dashboard | 3000 |
 
-## 🔧 **Features**
+## **Features**
 
 - **20×15 Grid System**: 300 trackable warehouse cells
 - **Live Heatmaps**: Visual intensity mapping with animations
@@ -51,7 +51,7 @@ npm start
 - **Interactive**: Click cells for detailed information
 - **Cross-platform**: Windows, macOS, Linux support
 
-## 🚨 **Troubleshooting**
+## **Troubleshooting**
 
 **Connection errors?**
 ```bash
@@ -63,13 +63,13 @@ npm run fix-and-start
 - **No Docker**: `npm run start:fallback`
 - **No data**: `npm run generate-test-data`
 
-## 📚 **Documentation**
+## **Documentation**
 
 - **[Demo Guide](./docs/DEMO_GUIDE.md)** - Presentation and demonstration guide
 - **[Practice Guide](./docs/PRACTICE_GUIDE.md)** - Learning exercises and tutorials
 - **[Troubleshooting](./docs/TROUBLESHOOTING.md)** - Complete troubleshooting reference
 
-## 🔍 **API Examples**
+## **API Examples**
 
 ```bash
 # Get live heatmap data
@@ -87,7 +87,7 @@ curl -X POST http://localhost:3001/generate-test-frame \
   -d '{"camera_id": "cam-001", "object_count": 5}'
 ```
 
-## 🎯 **Use Cases**
+## **Use Cases**
 
 - **Warehouse Management**: Track pallet movements and storage times
 - **Logistics Centers**: Monitor package flow and processing times
