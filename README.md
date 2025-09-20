@@ -94,6 +94,8 @@ curl -X POST http://localhost:3001/generate-test-frame \
 - **Construction Sites**: Track equipment utilization and idle times
 - **Retail Operations**: Customer movement and dwell time analysis
 
----
-
-**Perfect for product demos and understanding warehouse logistics through interactive data visualization!** 🎪
+## License
+This project is dual-licensed under the GNU 3.0 License and a Commercial License.
+- GNU 3.0 License: Free for open source and personal use
+- Commercial License: Required for commercial use, available via separate agreement
+Contact: your-email@example.com
