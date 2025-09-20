@@ -16,7 +16,11 @@ cd vision-logistics
 npm start
 ```
 
-** Open http://localhost:3000** to see:
+## Demo
+![Demo](./image/Demo_1.png)
+![Demo](./image/Demo_2.png)
+
+**🌐 Open http://localhost:3000** to see:
 - **Live animated heatmap** with 4 moving objects
 - **Real-time statistics** and object tracking
 - **Event log** showing live warehouse activity
