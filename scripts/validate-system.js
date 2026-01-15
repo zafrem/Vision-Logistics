@@ -100,7 +100,12 @@ const validations = [
         'ui/index.html',
         'ui/src/components/HeatmapGrid.tsx',
         'ui/src/components/StatsTable.tsx',
-        'ui/src/utils/api.ts'
+        'ui/src/components/CollectorSelector.tsx',
+        'ui/src/components/RealTimeLog.tsx',
+        'ui/src/components/SystemStatus.tsx',
+        'ui/src/hooks/useApi.ts',
+        'ui/src/utils/api.ts',
+        'ui/src/utils/formatters.ts'
       ];
       
       const missingFiles = uiFiles.filter(file => !existsSync(join(projectRoot, file)));
