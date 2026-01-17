@@ -9,6 +9,9 @@
     "manager",
     "ui"
   ],
+  "overrides": {
+    "esbuild": "0.19.11"
+  },
   "scripts": {
     "start": "node startup.js",
     "start:legacy": "node scripts/start.js",

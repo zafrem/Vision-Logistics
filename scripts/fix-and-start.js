@@ -89,16 +89,11 @@ async function installDependencies() {
     try {
       log(`Installing ${pkg.name} dependencies...`, 'blue');
       
-      // Remove node_modules and package-lock if they exist (clean install)
-      try {
-        await fs.rm(path.join(pkg.path, 'node_modules'), { recursive: true, force: true });
-        await fs.rm(path.join(pkg.path, 'package-lock.json'), { force: true });
-      } catch (e) {
-        // Ignore errors
-      }
+      // Use local cache to avoid permission issues
+      const cachePath = path.join(projectRoot, '.npm-local-cache');
       
       await new Promise((resolve, reject) => {
-        const child = spawn('npm', ['install'], { 
+        const child = spawn('npm', ['install', '--cache', cachePath], { 
           cwd: pkg.path,
           stdio: ['pipe', 'pipe', 'pipe']
         });
