@@ -2,11 +2,9 @@
 
 > **Real-time warehouse logistics tracking with live animated heatmaps**
 
-A demo-ready system that visualizes object movements across warehouse grid cells with animated heatmaps, real-time statistics, and live event tracking.
+## The Purpose Behind Development
 
-[![System Validation](https://img.shields.io/badge/system-validated-green)](./scripts/validate-system.js)
-[![Docker Support](https://img.shields.io/badge/docker-supported-blue)](#quick-start)
-[![Cross Platform](https://img.shields.io/badge/platform-cross--platform-lightgrey)](#quick-start)
+"You might notice this repo is a bit of an outlier compared to my other work. It actually started after a friend of mine, who runs a startup, vented to me about some issues. The problem is, my current setup is basically a dinosaur—it can't even handle running Kafka. I know I desperately need a new laptop or desktop, but I'm still sitting here agonizing over what to buy."
 
 ## **Quick Start**
 
